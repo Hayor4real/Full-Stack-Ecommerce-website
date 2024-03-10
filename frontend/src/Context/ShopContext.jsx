@@ -42,6 +42,7 @@ const ShopContextProvider = (props) => {
     }
     return totalItem;
   };
+
   const contextValue = {
     all_product,
     cartItems,
