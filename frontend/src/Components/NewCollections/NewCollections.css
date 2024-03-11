@@ -17,8 +17,10 @@
   background: #252525;
 }
 .collections {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 60px auto;
   gap: 30px;
+  max-width: 1280px;
 }
