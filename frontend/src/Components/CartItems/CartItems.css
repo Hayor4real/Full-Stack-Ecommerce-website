@@ -33,6 +33,11 @@
   height: 45px;
   border: 2px solid #ebebeb;
   background: #fff;
+  color: black;
+}
+.empty-cart-message {
+  color: red;
+  text-align: center;
 }
 .cartitems-down {
   display: flex;
