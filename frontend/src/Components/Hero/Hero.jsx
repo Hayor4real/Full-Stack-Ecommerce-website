@@ -1,8 +1,8 @@
 import React from "react";
 import "./Hero.css";
-import hand_icon from "../Assets/hand_icon.png";
+import hand_icon from "../Assets/fashion.jpg";
 //import arrow_icon from "../Assets/arrow.png";
-import hero_image from "../Assets/hero4.png";
+import hero_image from "../Assets/herobanner.jpg";
 import { Link } from "react-router-dom";
 const Hero = () => {
   return (
@@ -19,7 +19,7 @@ const Hero = () => {
         </div>
         <div className="hero-latest-btn">
           <Link style={{ textDecoration: "none" }} to="/login">
-            <button>Login</button>
+            <button>Check our products</button>
           </Link>
         </div>
       </div>
