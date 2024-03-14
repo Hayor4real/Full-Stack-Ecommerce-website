@@ -5,12 +5,11 @@ import { ShopContext } from "../../Context/ShopContext";
 import { Link } from "react-router-dom";
 
 const CartItems = () => {
-  const { getTotalCartAmount, all_product, removeFromCart, cartItems } =
+  const { products } = useContext(ShopContext);
+  const { cartItems, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
-
   const [promoCode, setPromoCode] = useState("");
   const [error, setError] = useState("");
-
   const handlePromoCodeSubmit = () => {
     // Regular expression for a promo code with alphabets and two numbers
     const promoCodePattern = /^[A-Za-z]{1}[0-9]{2}$/;
@@ -36,6 +35,7 @@ const CartItems = () => {
   const isCartEmpty = () => {
     return Object.values(cartItems).every((quantity) => quantity === 0);
   };
+
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -53,10 +53,10 @@ const CartItems = () => {
         </p>
       ) : (
         <>
-          {all_product.map((e) => {
+          {products.map((e) => {
             if (cartItems[e.id] > 0) {
               return (
-                <div key={e.id}>
+                <div>
                   <div className="cartitems-format-main cartitems-format">
                     <img
                       className="cartitems-product-icon"
