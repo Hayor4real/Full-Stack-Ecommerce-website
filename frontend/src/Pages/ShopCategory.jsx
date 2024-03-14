@@ -1,29 +1,40 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./CSS/ShopCategory.css";
-import { ShopContext } from "../Context/ShopContext";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
+import { Link } from "react-router-dom";
 
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext);
+  const [allproducts, setAllProducts] = useState([]);
+
+  const fetchInfo = () => {
+    fetch("http://localhost:4000/allproducts")
+      .then((res) => res.json())
+      .then((data) => setAllProducts(data));
+  };
+
+  useEffect(() => {
+    fetchInfo();
+  }, []);
+
   return (
-    <div className="shop-category">
-      <img className="shopcategory-banner" src={props.banner} alt="" />
+    <div className="shopcategory">
+      <img src={props.banner} className="shopcategory-banner" alt="" />
       <div className="shopcategory-indexSort">
         <p>
-          <span>Showing 1-12</span> out of 44 products
+          <span>Showing the products</span>
         </p>
         <div className="shopcategory-sort">
           Sort by <img src={dropdown_icon} alt="" />
         </div>
       </div>
       <div className="shopcategory-products">
-        {all_product.map((item, i) => {
+        {allproducts.map((item, i) => {
           if (props.category === item.category) {
             return (
               <Item
-                key={i}
                 id={item.id}
+                key={i}
                 name={item.name}
                 image={item.image}
                 new_price={item.new_price}
@@ -35,7 +46,11 @@ const ShopCategory = (props) => {
           }
         })}
       </div>
-      <div className="shopcategory-loadmore">Explore More</div>
+      <div className="shopcategory-loadmore">
+        <Link to="/" style={{ textDecoration: "none" }}>
+          Explore More
+        </Link>
+      </div>
     </div>
   );
 };
