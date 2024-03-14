@@ -12,6 +12,7 @@
 .hero-left h2 {
   color: #090909;
   font-size: 18px;
+  padding-right: 250px;
 }
 
 .hero-left p {
@@ -50,6 +51,7 @@
 
 .hero-right img {
   width: 450px;
+  height: 350px;
 }
 
 @media (max-width: 1200px) {
