@@ -12,16 +12,11 @@ app.use(express.json());
 app.use(cors());
 
 // Database Connection With MongoDB
-<<<<<<< HEAD
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-=======
-mongoose.connect(
-  "mongodb+srv://Ayorinde:@cluster0.0ccvrin.mongodb.net/e-commerce"
-);
->>>>>>> 9f1e9c8e9614526337e9f4678a596bf19db58277
 
 //Image Storage Engine
 const storage = multer.diskStorage({
