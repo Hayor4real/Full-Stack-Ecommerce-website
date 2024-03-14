@@ -12,7 +12,7 @@ app.use(cors());
 
 // Database Connection With MongoDB
 mongoose.connect(
-  "mongodb+srv://Ayorinde:October181992@cluster0.0ccvrin.mongodb.net/e-commerce"
+  "mongodb+srv://Ayorinde:@cluster0.0ccvrin.mongodb.net/e-commerce"
 );
 
 //Image Storage Engine
