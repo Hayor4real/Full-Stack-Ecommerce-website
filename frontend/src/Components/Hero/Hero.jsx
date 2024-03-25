@@ -2,7 +2,7 @@ import React from "react";
 import "./Hero.css";
 import hand_icon from "../Assets/fashion.jpg";
 //import arrow_icon from "../Assets/arrow.png";
-import hero_image from "../Assets/herobanner.jpg";
+//import hero_image from "../Assets/herobanner.jpg";
 import { Link } from "react-router-dom";
 const Hero = () => {
   return (
@@ -23,9 +23,7 @@ const Hero = () => {
           </Link>
         </div>
       </div>
-      <div className="hero-right">
-        <img src={hero_image} alt="" />
-      </div>
+      <div className="hero-right"></div>
     </div>
   );
 };
