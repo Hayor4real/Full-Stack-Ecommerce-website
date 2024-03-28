@@ -1,4 +1,4 @@
-const port = 4000;
+const port = process.env.PORT || 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -7,6 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config();
+const jwtSecret = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(cors());
@@ -45,7 +46,7 @@ const fetchuser = async (req, res, next) => {
     res.status(401).send({ errors: "Please authenticate using a valid token" });
   }
   try {
-    const data = jwt.verify(token, "secret_ecom");
+    const data = jwt.verify(token, jwtSecret);
     req.user = data.user;
     next();
   } catch (error) {
@@ -114,7 +115,6 @@ app.get("/", (req, res) => {
 
 //Create an endpoint at ip/login for login the user and giving auth-token
 app.post("/login", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   console.log("Login");
   let success = false;
   let user = await Users.findOne({ email: req.body.email });
@@ -128,7 +128,7 @@ app.post("/login", async (req, res) => {
       };
       success = true;
       console.log(user.id);
-      const token = jwt.sign(data, "secret_ecom");
+      const token = jwt.sign(data, jwtSecret);
       res.json({ success, token });
     } else {
       return res.status(400).json({
@@ -146,7 +146,6 @@ app.post("/login", async (req, res) => {
 
 //Create an endpoint at ip/auth for registraing the user in data base & sending token
 app.post("/signup", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   console.log("Sign Up");
   let success = false;
   let check = await Users.findOne({ email: req.body.email });
@@ -173,20 +172,18 @@ app.post("/signup", async (req, res) => {
     },
   };
 
-  const token = jwt.sign(data, "secret_ecom");
+  const token = jwt.sign(data, jwtSecret);
   success = true;
   res.json({ success, token });
 });
 
 app.get("/allproducts", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   let products = await Product.find({});
   console.log("All Products");
   res.send(products);
 });
 
 app.get("/newcollections", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   let products = await Product.find({});
   let arr = products.slice(1).slice(-8);
   console.log("New Collections");
@@ -194,7 +191,6 @@ app.get("/newcollections", async (req, res) => {
 });
 
 app.get("/popularinwomen", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   let products = await Product.find({ category: "women" });
   let arr = products.splice(0, 4);
   console.log("Popular In Women");
@@ -203,7 +199,6 @@ app.get("/popularinwomen", async (req, res) => {
 
 //Create an endpoint for saving the product in cart
 app.post("/addtocart", fetchuser, async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   console.log("Add Cart");
   let userData = await Users.findOne({ _id: req.user.id });
   userData.cartData[req.body.itemId] += 1;
@@ -216,7 +211,6 @@ app.post("/addtocart", fetchuser, async (req, res) => {
 
 //Create an endpoint for saving the product in cart
 app.post("/removefromcart", fetchuser, async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   console.log("Remove Cart");
   let userData = await Users.findOne({ _id: req.user.id });
   if (userData.cartData[req.body.itemId] != 0) {
@@ -231,14 +225,12 @@ app.post("/removefromcart", fetchuser, async (req, res) => {
 
 //Create an endpoint for saving the product in cart
 app.post("/getcart", fetchuser, async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   console.log("Get Cart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
 
 app.post("/addproduct", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   let products = await Product.find({});
   let id;
   if (products.length > 0) {
@@ -263,7 +255,6 @@ app.post("/addproduct", async (req, res) => {
 });
 
 app.post("/removeproduct", async (req, res) => {
-  res.setHeader("Access.Control.Allow.Credentials", "true");
   const product = await Product.findOneAndDelete({ id: req.body.id });
   console.log("Removed");
   res.json({ success: true, name: req.body.name });
