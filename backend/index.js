@@ -9,8 +9,15 @@ const cors = require("cors");
 require("dotenv").config();
 const jwtSecret = process.env.JWT_SECRET;
 
+console.log(__dirname);
 app.use(express.json());
 app.use(cors());
+
+// Use the client app
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+app.use("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+);
 
 // Database Connection With MongoDB
 
